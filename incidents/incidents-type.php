@@ -1,8 +1,6 @@
 <?php
   namespace Incidents;
   
-  require_once( __DIR__ . '/../vendor/autoload.php');
-  
   if (!defined('ABSPATH')) { 
     exit;
   }
@@ -41,12 +39,6 @@
         'read_post' => 'read_incident',
       ]
     ));
-  });
-  
-  add_action('admin_menu', function () {
-    if (!\KuntaAPI\Core\CoreSettings::getBooleanValue('incidentsEnabled')) {
-      remove_menu_page('edit.php?post_type=incident');
-    }
   });
   
   add_filter( 'map_meta_cap', function ($capabilities, $capability, $user_id, $args) {
