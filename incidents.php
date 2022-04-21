@@ -4,7 +4,7 @@
  * Plugin Name: Incidents
  * Description: Plugin that allows incidents
  * Version: 1.0.0
- * Author: Metatavu O
+ * Author: Metatavu Oy
  */
 
   defined ( 'ABSPATH' ) || die ( 'No script kiddies please!' );

@@ -2,11 +2,11 @@
 # This file is distributed under the same license as the Wordpress Incidents plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Wordpress Incidents 1.0.0\n"
+"Project-Id-Version: Incidents 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wordpress-"
 "incidents\n"
 "POT-Creation-Date: 2022-04-21 11:49+0300\n"
-"PO-Revision-Date: 2022-04-21 12:36+0300\n"
+"PO-Revision-Date: 2022-04-21 13:41+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fi\n"
