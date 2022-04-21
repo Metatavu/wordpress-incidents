@@ -8,9 +8,14 @@
   if (!class_exists( 'Incidents\IncidentsRest' ) ) {
     class IncidentsRest {
       public function __construct() {
-        register_rest_route("incidents", "/(?P<id>[\d]+)", array(
+        register_rest_route("incidents", "/incidents/(?P<id>[\d]+)", array(
           'methods' => 'GET',
-          'callback' => array($this, 'getSingleIncident')
+          'callback' => array($this, 'findIncident')
+        ));
+
+        register_rest_route("incidents", "/incidents", array(
+          'methods' => 'GET',
+          'callback' => array($this, 'listIncidents')
         ));
       }
 
@@ -64,9 +69,25 @@
         ];
       }
     
-      function getSingleIncident($request) {
+      function findIncident($request) {
         extract($request->get_params());
+
+        if (get_post($id) == null) {
+          return 404;
+        }
+
         return $this->buildIncident($id);
+      }
+
+      function listIncidents() {
+        $args = array(
+          'post_type'=> 'incident',
+          'fields'=> 'ids'
+        );
+
+        $ids = get_posts($args);
+        $incidents = array_map(array($this, 'buildIncident'), $ids);
+        return $incidents;
       }
     }
   }
