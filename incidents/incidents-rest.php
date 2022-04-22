@@ -109,6 +109,12 @@
         return $this->buildIncident($id);
       }
 
+      /**
+       * Filter incident by time and area
+       * 
+       * @param id id
+       * @param area area
+       */
       function filterIncident($id, $area) {
         $startTime = $this->getIncidentMetaTimestamp($id, 'start_time');
         $endTime = $this->getIncidentMetaTimestamp($id, 'end_time');
@@ -148,7 +154,7 @@
           $id = $ids[$i];
 
           $keep = $this->filterIncident($id, $area);
-          
+
           if (!$keep) {
             continue;
           }
