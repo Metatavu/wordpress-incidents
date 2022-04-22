@@ -64,7 +64,7 @@
       /**
        * Returns incident meta timestamp
        * 
-       * @param id
+       * @param id incident id
        * @param field_name field name
        */
       function getIncidentMetaTimestamp($id, $field_name) {
@@ -79,7 +79,7 @@
       /**
        * Builds an incident JSON-object
        * 
-       * @param incident id
+       * @param id incident id
        */
       function buildIncident($id) {
         return [
