@@ -6,6 +6,10 @@
   }
 
   if (!class_exists( 'Incidents\IncidentsRest' ) ) {
+
+    /**
+     * Creates REST routes for incidents
+     */
     class IncidentsRest {
       public function __construct() {
         register_rest_route("incidents", "/incidents/(?P<id>[\d]+)", array(
@@ -19,6 +23,12 @@
         ));
       }
 
+      /**
+       * Returns incident meta
+       * 
+       * @param id incident id
+       * @param field_name field name
+       */
       function getIncidentMeta($id, $field_name) {
         $value = get_post_meta($id, $field_name, true);        
         if ($value) {
@@ -28,6 +38,12 @@
         return null;
       }
       
+      /**
+       * Returns incident meta term array
+       * 
+       * @param id
+       * @param field_name field name
+       */
       function getIncidentMetaTermArray($id, $field_name) {
         $result = [];
         
@@ -48,6 +64,12 @@
         return $result;
       }
       
+      /**
+       * Returns incident meta date time
+       * 
+       * @param id
+       * @param field_name field name
+       */
       function getIncidentMetaDateTime($id, $field_name) {
         $value = $this->getIncidentMeta($id, $field_name);
         if ($value) {
@@ -57,6 +79,11 @@
         return null;
       }
 
+      /**
+       * Builds an incident JSON-object
+       * 
+       * @param incident id
+       */
       function buildIncident($id) {
         return [
           'title' => get_the_title($id),
@@ -70,6 +97,11 @@
         ];
       }
     
+      /**
+       * Finds an incident
+       * 
+       * @param request request
+       */
       function findIncident($request) {
         extract($request->get_params());
 
@@ -80,6 +112,9 @@
         return $this->buildIncident($id);
       }
 
+      /**
+       * Lists incidents
+       */
       function listIncidents() {
         $args = array(
           'post_type'=> 'incident',
