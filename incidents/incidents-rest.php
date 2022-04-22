@@ -18,6 +18,8 @@
         ));
       }
 
+      private $area = null;
+
       /**
        * Returns incident meta
        * 
@@ -95,7 +97,7 @@
        * @param id id
        * @param area area
        */
-      function filterIncident($id, $area) {
+      function filterIncident($id) {
         $startTime = $this->getIncidentMetaTimestamp($id, 'start_time');
         $endTime = $this->getIncidentMetaTimestamp($id, 'end_time');
         $currentTime  = strtotime(date('Y-m-d\TH:i:s'));
@@ -109,7 +111,7 @@
         }
 
         $areas = $this->getIncidentMetaTermArray($id, 'areas');
-        if (!in_array($area, $areas)) {
+        if (!in_array($this->area, $areas)) {
           return false;
         }
 
@@ -128,19 +130,10 @@
         ];
 
         $ids = get_posts($args);
-        $incidents = [];
-
-        for ($i = 0; $i < count($ids); $i++) {
-          $id = $ids[$i];
-
-          $keep = $this->filterIncident($id, $area);
-
-          if (!$keep) {
-            continue;
-          }
-
-          array_push($incidents, $this->buildIncident($id));
-        }
+        
+        $this->area = $area;
+        $filteredIds = array_values(array_filter($ids, array($this, 'filterIncident')));
+        $incidents = array_map(array($this, 'buildIncident'), $filteredIds);
 
         return $incidents;
       }
