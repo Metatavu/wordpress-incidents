@@ -12,11 +12,6 @@
      */
     class IncidentsRest {
       public function __construct() {
-        register_rest_route("incidents", "/incidents/(?P<id>[\d]+)", array(
-          'methods' => 'GET',
-          'callback' => array($this, 'findIncident')
-        ));
-
         register_rest_route("incidents", "/incidents(?:/?area=(?P<area>\d+))?", array(
           'methods' => 'GET',
           'callback' => array($this, 'listIncidents')
@@ -92,21 +87,6 @@
           'detailsLink' => $this->getIncidentMeta($id, 'details_link'),
           'detailsLinkText' => $this->getIncidentMeta($id, 'details_link_text')
         ];
-      }
-    
-      /**
-       * Finds an incident
-       * 
-       * @param request request
-       */
-      function findIncident($request) {
-        extract($request->get_params());
-
-        if (get_post($id) == null) {
-          return 404;
-        }
-
-        return $this->buildIncident($id);
       }
 
       /**
