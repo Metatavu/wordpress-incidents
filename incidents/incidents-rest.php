@@ -89,7 +89,6 @@
         ];
       }
       
-
       /**
        * Lists incidents
        */
@@ -102,8 +101,7 @@
         ];
 
         $ids = get_posts($args);
-
-        $filteredIds = array_values(array_filter($ids, array($this, function ($id) {
+        $filteredIds = array_values(array_filter($ids, function ($id) use($area){
           $startTime = $this->getIncidentMetaTimestamp($id, 'start_time');
           $endTime = $this->getIncidentMetaTimestamp($id, 'end_time');
           $currentTime  = strtotime(date('Y-m-d\TH:i:s'));
@@ -117,12 +115,15 @@
           }
   
           $areas = $this->getIncidentMetaTermArray($id, 'areas');
+          error_log("******");
+          error_log($area);
+          error_log("******");
           if (!in_array($area, $areas)) {
             return false;
           }
-  
+
           return true;
-        })));
+        }));
 
         $incidents = array_map(array($this, 'buildIncident'), $filteredIds);
 
