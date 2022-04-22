@@ -17,7 +17,7 @@
           'callback' => array($this, 'findIncident')
         ));
 
-        register_rest_route("incidents", "/incidents", array(
+        register_rest_route("incidents", "/incidents(?:/?area=(?P<area>\d+))?", array(
           'methods' => 'GET',
           'callback' => array($this, 'listIncidents')
         ));
@@ -65,15 +65,15 @@
       }
       
       /**
-       * Returns incident meta date time
+       * Returns incident meta timestamp
        * 
        * @param id
        * @param field_name field name
        */
-      function getIncidentMetaDateTime($id, $field_name) {
+      function getIncidentMetaTimestamp($id, $field_name) {
         $value = $this->getIncidentMeta($id, $field_name);
         if ($value) {
-          return date("Y-m-d\TH:i:s", strtotime($value));
+          return strtotime($value);
         }
         
         return null;
@@ -90,10 +90,7 @@
           'severity' => $this->getIncidentMeta($id, 'incident_type'),
           'description' => $this->getIncidentMeta($id, 'description'),
           'detailsLink' => $this->getIncidentMeta($id, 'details_link'),
-          'detailsLinkText' => $this->getIncidentMeta($id, 'details_link_text'),
-          'areas' => $this->getIncidentMetaTermArray($id, 'areas'),
-          'startTime' => $this->getIncidentMetaDateTime($id, 'start_time'),
-          'endTime' => $this->getIncidentMetaDateTime($id, 'end_time')
+          'detailsLinkText' => $this->getIncidentMeta($id, 'details_link_text')
         ];
       }
     
@@ -112,17 +109,53 @@
         return $this->buildIncident($id);
       }
 
+      function filterIncident($id, $area) {
+        $startTime = $this->getIncidentMetaTimestamp($id, 'start_time');
+        $endTime = $this->getIncidentMetaTimestamp($id, 'end_time');
+        $currentTime  = strtotime(date('Y-m-d\TH:i:s'));
+
+        if ($startTime != null && $currentTime < $startTime) {
+          return false;
+        }
+
+        if ($endTime != null && $endTime < $currentTime) {
+          return false;
+        }
+
+        $areas = $this->getIncidentMetaTermArray($id, 'areas');
+        if (!in_array($area, $areas)) {
+          return false;
+        }
+
+        return true;
+      }
+
       /**
        * Lists incidents
        */
-      function listIncidents() {
+      function listIncidents($request) {
+        extract($request->get_params());
+        
         $args = array(
           'post_type'=> 'incident',
           'fields'=> 'ids'
         );
 
         $ids = get_posts($args);
-        $incidents = array_map(array($this, 'buildIncident'), $ids);
+        $incidents = array();
+
+        for ($i = 0; $i < count($ids); $i++) {
+          $id = $ids[$i];
+
+          $keep = $this->filterIncident($id, $area);
+          
+          if (!$keep) {
+            continue;
+          }
+
+          array_push($incidents, $this->buildIncident($id));
+        }
+
         return $incidents;
       }
     }
