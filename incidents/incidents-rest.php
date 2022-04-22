@@ -38,7 +38,7 @@
       /**
        * Returns incident meta term array
        * 
-       * @param id
+       * @param id incident id
        * @param field_name field name
        */
       function getIncidentMetaTermArray($id, $field_name) {
