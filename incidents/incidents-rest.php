@@ -128,7 +128,7 @@
         );
 
         $ids = get_posts($args);
-        $incidents = array();
+        $incidents = [];
 
         for ($i = 0; $i < count($ids); $i++) {
           $id = $ids[$i];
