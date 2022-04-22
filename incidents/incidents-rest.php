@@ -18,8 +18,6 @@
         ));
       }
 
-      private $area = null;
-
       /**
        * Returns incident meta
        * 
@@ -90,38 +88,13 @@
           'detailsLinkText' => $this->getIncidentMeta($id, 'details_link_text')
         ];
       }
-
-      /**
-       * Filter incident by time and area
-       * 
-       * @param id id
-       */
-      function filterIncident($id) {
-        $startTime = $this->getIncidentMetaTimestamp($id, 'start_time');
-        $endTime = $this->getIncidentMetaTimestamp($id, 'end_time');
-        $currentTime  = strtotime(date('Y-m-d\TH:i:s'));
-
-        if ($startTime != null && $currentTime < $startTime) {
-          return false;
-        }
-
-        if ($endTime != null && $endTime < $currentTime) {
-          return false;
-        }
-
-        $areas = $this->getIncidentMetaTermArray($id, 'areas');
-        if (!in_array($this->area, $areas)) {
-          return false;
-        }
-
-        return true;
-      }
+      
 
       /**
        * Lists incidents
        */
       function listIncidents($request) {
-        extract($request->get_params());
+        $area = $request->get_param('area');
         
         $args = [
           'post_type'=> 'incident',
@@ -129,9 +102,28 @@
         ];
 
         $ids = get_posts($args);
-        
-        $this->area = $area;
-        $filteredIds = array_values(array_filter($ids, array($this, 'filterIncident')));
+
+        $filteredIds = array_values(array_filter($ids, array($this, function ($id) {
+          $startTime = $this->getIncidentMetaTimestamp($id, 'start_time');
+          $endTime = $this->getIncidentMetaTimestamp($id, 'end_time');
+          $currentTime  = strtotime(date('Y-m-d\TH:i:s'));
+  
+          if ($startTime != null && $currentTime < $startTime) {
+            return false;
+          }
+  
+          if ($endTime != null && $endTime < $currentTime) {
+            return false;
+          }
+  
+          $areas = $this->getIncidentMetaTermArray($id, 'areas');
+          if (!in_array($area, $areas)) {
+            return false;
+          }
+  
+          return true;
+        })));
+
         $incidents = array_map(array($this, 'buildIncident'), $filteredIds);
 
         return $incidents;
