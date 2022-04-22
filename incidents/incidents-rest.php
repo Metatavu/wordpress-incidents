@@ -59,13 +59,14 @@
 
       function buildIncident($id) {
         return [
-          'incident_type' => $this->getIncidentMeta($id, 'incident_type'),
+          'title' => get_the_title($id),
+          'severity' => $this->getIncidentMeta($id, 'incident_type'),
           'description' => $this->getIncidentMeta($id, 'description'),
-          'details_link' => $this->getIncidentMeta($id, 'details_link'),
-          'details_link_text' => $this->getIncidentMeta($id, 'details_link_text'),
+          'detailsLink' => $this->getIncidentMeta($id, 'details_link'),
+          'detailsLinkText' => $this->getIncidentMeta($id, 'details_link_text'),
           'areas' => $this->getIncidentMetaTermArray($id, 'areas'),
-          'start_time' => $this->getIncidentMetaDateTime($id, 'start_time'),
-          'end_time' => $this->getIncidentMetaDateTime($id, 'end_time')
+          'startTime' => $this->getIncidentMetaDateTime($id, 'start_time'),
+          'endTime' => $this->getIncidentMetaDateTime($id, 'end_time')
         ];
       }
     
@@ -91,8 +92,6 @@
       }
     }
   }
-
-  
 
   add_action('rest_api_init',function () {
     new IncidentsRest();
