@@ -12,10 +12,10 @@
      */
     class IncidentsRest {
       public function __construct() {
-        register_rest_route("incidents", "/incidents(?:/?area=(?P<area>\d+))?", array(
+        register_rest_route("incidents", "/incidents(?:/?area=(?P<area>\d+))?", [
           'methods' => 'GET',
-          'callback' => array($this, 'listIncidents')
-        ));
+          'callback' => [$this, 'listIncidents']
+        ]);
       }
 
       /**
@@ -115,9 +115,6 @@
           }
   
           $areas = $this->getIncidentMetaTermArray($id, 'areas');
-          error_log("******");
-          error_log($area);
-          error_log("******");
           if (!in_array($area, $areas)) {
             return false;
           }
@@ -125,7 +122,7 @@
           return true;
         }));
 
-        $incidents = array_map(array($this, 'buildIncident'), $filteredIds);
+        $incidents = array_map([$this, 'buildIncident'], $filteredIds);
 
         return $incidents;
       }
