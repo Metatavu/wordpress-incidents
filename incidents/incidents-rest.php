@@ -95,7 +95,6 @@
        * Filter incident by time and area
        * 
        * @param id id
-       * @param area area
        */
       function filterIncident($id) {
         $startTime = $this->getIncidentMetaTimestamp($id, 'start_time');
