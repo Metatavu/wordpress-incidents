@@ -122,10 +122,10 @@
       function listIncidents($request) {
         extract($request->get_params());
         
-        $args = array(
+        $args = [
           'post_type'=> 'incident',
           'fields'=> 'ids'
-        );
+        ];
 
         $ids = get_posts($args);
         $incidents = [];
