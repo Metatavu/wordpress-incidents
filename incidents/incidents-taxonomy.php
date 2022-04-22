@@ -8,7 +8,7 @@
   add_action('init', function () {
   	register_taxonomy('incident_areas', 'incident', [
   	  'label' => __( 'Incident Areas', INCIDENTS_DOMAIN),
-  	  'rewrite' => array( 'slug' => 'incident_areas' ),
+  	  'rewrite' => ['slug' => 'incident_areas'],
   	  'show_ui' => true,
   	  'show_in_menu' => true,
   	  'show_in_nav_menus' => false,
