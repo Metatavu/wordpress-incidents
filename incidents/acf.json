@@ -1,0 +1,163 @@
+
+[
+  {
+      "key": "group_5914a485a1d44",
+      "title": "incidents",
+      "fields": [
+          {
+              "key": "field_59152aad26438",
+              "label": "Tyyppi",
+              "name": "incident_type",
+              "type": "select",
+              "instructions": "",
+              "required": 0,
+              "conditional_logic": 0,
+              "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+              },
+              "choices": {
+                  "disruption": "Häiriö",
+                  "severe": "Vakava"
+              },
+              "default_value": [
+                  "disruption"
+              ],
+              "allow_null": 0,
+              "multiple": 0,
+              "ui": 0,
+              "ajax": 0,
+              "return_format": "value",
+              "placeholder": ""
+          },
+          {
+              "key": "field_5914a48b51663",
+              "label": "Kuvaus",
+              "name": "description",
+              "type": "textarea",
+              "instructions": "",
+              "required": 0,
+              "conditional_logic": 0,
+              "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+              },
+              "default_value": "",
+              "placeholder": "",
+              "maxlength": "",
+              "rows": "",
+              "new_lines": ""
+          },
+          {
+              "key": "field_592e6c28f35b1",
+              "label": "Lisätietojen linkki",
+              "name": "details_link",
+              "type": "url",
+              "instructions": "Kirjoita tähän url-osoite lisätietoihin (esim. https:\/\/www.example.com\/lisatiedot)",
+              "required": 0,
+              "conditional_logic": 0,
+              "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+              },
+              "default_value": "",
+              "placeholder": "url-osoite lisätietoihin"
+          },
+          {
+              "key": "field_592e6c87f35b2",
+              "label": "Lisätietojen linkin teksti",
+              "name": "details_link_text",
+              "type": "text",
+              "instructions": "Kirjoita tähän lisätietojen linkin näytettävä teksti. Mikäli kenttä jätetään tyhjäksi käytetään linkin osoitetta.",
+              "required": 0,
+              "conditional_logic": 0,
+              "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+              },
+              "default_value": "",
+              "placeholder": "",
+              "prepend": "",
+              "append": "",
+              "maxlength": ""
+          },
+          {
+              "key": "field_59152b4de5f9b",
+              "label": "Alueet",
+              "name": "areas",
+              "type": "taxonomy",
+              "instructions": "",
+              "required": 0,
+              "conditional_logic": 0,
+              "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+              },
+              "taxonomy": "incident_areas",
+              "field_type": "checkbox",
+              "allow_null": 0,
+              "add_term": 1,
+              "save_terms": 0,
+              "load_terms": 0,
+              "return_format": "id",
+              "multiple": 0
+          },
+          {
+              "key": "field_59152b74e5f9c",
+              "label": "Alkuaika",
+              "name": "start_time",
+              "type": "date_time_picker",
+              "instructions": "",
+              "required": 0,
+              "conditional_logic": 0,
+              "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+              },
+              "display_format": "F j, Y H:i",
+              "return_format": "Y-m-d H:i",
+              "first_day": 1
+          },
+          {
+              "key": "field_59152bd582cc8",
+              "label": "Loppuaika",
+              "name": "end_time",
+              "type": "date_time_picker",
+              "instructions": "",
+              "required": 0,
+              "conditional_logic": 0,
+              "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+              },
+              "display_format": "F j, Y H:i",
+              "return_format": "Y-m-d H:i",
+              "first_day": 1
+          }
+      ],
+      "location": [
+          [
+              {
+                  "param": "post_type",
+                  "operator": "==",
+                  "value": "incident"
+              }
+          ]
+      ],
+      "menu_order": 0,
+      "position": "normal",
+      "style": "seamless",
+      "label_placement": "top",
+      "instruction_placement": "label",
+      "hide_on_screen": "",
+      "active": 1,
+      "description": ""
+  }
+]
